@@ -1,0 +1,38 @@
+User-agent: *
+# Allow main site
+Allow: /
+
+# Block crawl waste URLs
+Disallow: /*?*
+Disallow: /search
+Disallow: /tag/
+Disallow: /author/
+Disallow: /cgi-bin/
+Disallow: */feed/
+Disallow: */comments/
+
+# Sitemap
+Sitemap: https://boutiquehotelsudaipur.com/sitemap.xml
+
+
+#################################
+# 🤖 AI Crawlers (LLM Friendly)
+#################################
+
+# Allow AI search bots
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Allow Google AI (Gemini visibility)
+User-agent: Google-Extended
+Allow: /
+
+# (Optional) Allow training bot for broader AI visibility
+User-agent: GPTBot
+Allow: /

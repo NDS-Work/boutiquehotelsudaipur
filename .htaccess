@@ -1,0 +1,102 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.boutiquehotelsudaipur\.com [NC]
+RewriteRule ^ https://boutiquehotelsudaipur.com%{REQUEST_URI} [R=301,L]
+
+# ── Specific 301 Redirect: 'and' to '&' ──────────────────────
+RewriteRule ^Top-5-Boutique-Hotels-in-Udaipur-for-Couples-and-Luxury-Travelers/?$ https://boutiquehotelsudaipur.com/Top-5-Boutique-Hotels-in-Udaipur-for-Couples-&-Luxury-Travelers [R=301,L]
+
+Options -Indexes
+RewriteEngine On
+
+# ─────────────────────────────────────────────────────────────
+# 0. Pass real files and directories through untouched
+# ─────────────────────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+
+# ─────────────────────────────────────────────────────────────
+# 1. Strip .php extension from direct browser requests (301)
+#    e.g. /hotels.php → /hotels
+# ─────────────────────────────────────────────────────────────
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s/([^.]+)\.php(\?[^\s]*)?\s [NC]
+RewriteCond %{THE_REQUEST} !10-Best-Boutique [NC]
+RewriteCond %{THE_REQUEST} !Top-5-Boutique [NC]
+RewriteCond %{THE_REQUEST} !10-Famous-Heritage-Hotels-in-Udaipur [NC]
+RewriteCond %{THE_REQUEST} !Top-10-Hidden [NC]
+RewriteCond %{THE_REQUEST} !10-Famous-Heritage-Hotels-in-Rajasthan [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+
+
+# ── Privacy & Terms routing ───────────────────────────────────
+RewriteRule ^privacy/?$ /privacy.php [L]
+RewriteRule ^terms/?$ /terms.php [L]
+
+# ─────────────────────────────────────────────────────────────
+# 2. Legacy query-string redirects → new clean URLs (301)
+#    /hotels.php?collection=foo  → /hotels/collection/foo
+#    /hotels.php?attraction=foo  → /hotels/attraction/foo
+#    /hotels.php?occasion=foo    → /hotels/occasion/foo
+#    /hotels.php?amenities[]=ID  → keep as-is (too complex to redirect)
+# ─────────────────────────────────────────────────────────────
+RewriteCond %{QUERY_STRING} ^collection=([^&]+)$
+RewriteRule ^hotels/?$ /hotels/collection/%1? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^attraction=([^&]+)$
+RewriteRule ^hotels/?$ /hotels/attraction/%1? [R=301,L]
+
+RewriteCond %{QUERY_STRING} ^occasion=([^&]+)$
+RewriteRule ^hotels/?$ /hotels/occasion/%1? [R=301,L]
+
+# ─────────────────────────────────────────────────────────────
+# 3. Listing page: /hotels  →  hotels.php
+# ─────────────────────────────────────────────────────────────
+RewriteRule ^hotels/?$ hotels.php [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 4. Filter routes: /hotels/{filter_type}/{filter_slug}
+#    Supported types: collection, attraction, occasion, amenity
+#    Maps to hotels.php with the right GET param
+# ─────────────────────────────────────────────────────────────
+RewriteRule ^hotels/collection/([^/]+)/?$  hotels.php?collection=$1  [L,QSA]
+RewriteRule ^hotels/attraction/([^/]+)/?$  hotels.php?attraction=$1  [L,QSA]
+RewriteRule ^hotels/occasion/([^/]+)/?$    hotels.php?occasion=$1    [L,QSA]
+RewriteRule ^hotels/amenity/([^/]+)/?$     hotels.php?amenitySlug=$1 [L,QSA]
+
+# Shorthand top-level filter aliases (optional convenience URLs)
+# e.g.  /collection/lake-pichola  →  hotels.php?collection=lake-pichola
+RewriteRule ^collection/([^/]+)/?$  hotels.php?collection=$1  [L,QSA]
+RewriteRule ^attraction/([^/]+)/?$  hotels.php?attraction=$1  [L,QSA]
+RewriteRule ^occasion/([^/]+)/?$    hotels.php?occasion=$1    [L,QSA]
+RewriteRule ^amenity/([^/]+)/?$     hotels.php?amenitySlug=$1 [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 5. Hotel detail: /hotels/{hotel-slug}
+#    This comes AFTER filter routes so named filter types
+#    (collection, attraction, occasion, amenity) are never
+#    mistaken for hotel slugs.
+# ─────────────────────────────────────────────────────────────
+RewriteRule ^hotels/([^/]+)/?$  venue-detail.php?slug=$1  [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 6. Admin clean URLs: /admin/page  →  admin/page.php
+# ─────────────────────────────────────────────────────────────
+RewriteRule ^admin/([^/]+)/?$  admin/$1.php  [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 6b. Blog article routes
+# ─────────────────────────────────────────────────────────────
+RewriteRule ^10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola/?$ 10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola.php [L,QSA]
+RewriteRule ^Top-5-Boutique-Hotels-in-Udaipur-for-Couples-and-Luxury-Travelers/?$ Top-5-Boutique-Hotels-in-Udaipur-for-Couples-and-Luxury-Travelers.php [L,QSA]
+RewriteRule ^10-Famous-Heritage-Hotels-in-Udaipur-with-Traditional-Mewari-Charm/?$ 10-Famous-Heritage-Hotels-in-Udaipur-with-Traditional-Mewari-Charm.php [L,QSA]
+RewriteRule ^Top-10-Hidden-Boutique-Hotels-in-Rajasthan-with-Royal-Hospitality/?$ Top-10-Hidden-Boutique-Hotels-in-Rajasthan-with-Royal-Hospitality.php [L,QSA]
+RewriteRule ^10-Famous-Heritage-Hotels-in-Rajasthan-You-Must-Experience/?$ 10-Famous-Heritage-Hotels-in-Rajasthan-You-Must-Experience.php [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 7. Top-level pages: /about  →  about.php  (only if .php exists)
+# ─────────────────────────────────────────────────────────────
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)/?$  $1.php  [L,QSA]

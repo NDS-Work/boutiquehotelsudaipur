@@ -1,0 +1,49 @@
+# LLMs.txt for httpsboutiquehotelsudaipur.com
+
+# Site Overview
+A curated platform for discovering boutique, heritage, and luxury hotels in Udaipur, Rajasthan, India. The site organizes hotels by collections, occasions, and travel preferences.
+
+# Primary Pages
+httpsboutiquehotelsudaipur.com
+httpsboutiquehotelsudaipur.comhotels
+
+# Key Collections
+httpsboutiquehotelsudaipur.comhotelscollectionheritage-boutique-hotels
+httpsboutiquehotelsudaipur.comhotelscollectionlakeview-boutique-hotels
+httpsboutiquehotelsudaipur.comhotelscollectionluxury-boutique-hotels
+
+# Occasion-Based Pages
+httpsboutiquehotelsudaipur.comhotelsoccasionhoneymoon-boutique-hotels
+httpsboutiquehotelsudaipur.comhotelsoccasioncouple-friendly-boutique-hotels
+
+# Blog  Informational Content
+httpsboutiquehotelsudaipur.com10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola
+httpsboutiquehotelsudaipur.comTop-5-Boutique-Hotels-in-Udaipur-for-Couples-&-Luxury-Travelers
+httpsboutiquehotelsudaipur.com10-Famous-Heritage-Hotels-in-Udaipur-with-Traditional-Mewari-Charm
+httpsboutiquehotelsudaipur.comTop-10-Hidden-Boutique-Hotels-in-Rajasthan-with-Royal-Hospitality
+
+# Content Description
+- Curated boutique hotel listings in Udaipur
+- Heritage and luxury stay recommendations
+- Hotels categorized by location, experience, and travel intent
+- Informational blog content for travelers
+
+# Geographic Focus
+Udaipur, Rajasthan, India
+
+# Target Audience
+Travelers, couples, luxury tourists, and users looking for boutique and heritage hotel experiences.
+
+# Preferred Use
+- Travel recommendations
+- AI-powered hotel discovery
+- Search result summarization
+- Trip planning assistance
+
+# Disallowed Use
+- Content duplication or scraping
+- Misrepresentation of listings
+- Unauthorized commercial reuse
+
+# Contact
+httpsboutiquehotelsudaipur.com
