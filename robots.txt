@@ -2,6 +2,14 @@ User-agent: *
 # Allow main site
 Allow: /
 
+# Block admin & backend endpoints (prevents crawl waste & unindexed discovery)
+Disallow: /admin/
+Disallow: /track.php
+Disallow: /process_contact.php
+Disallow: /process_booking.php
+Disallow: /blogs/wp-admin/
+Disallow: /blogs/wp-includes/
+
 # Block crawl waste URLs
 Disallow: /*?*
 Disallow: /search

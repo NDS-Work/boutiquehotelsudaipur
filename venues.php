@@ -62,6 +62,7 @@ $filteredVenues = array_slice($allFilteredVenues, $offset, $perPage);
 $showingFrom = $totalFiltered > 0 ? $offset + 1 : 0;
 $showingTo = min($offset + count($filteredVenues), $totalFiltered);
 $hasActiveFilters = ($location !== 'all' || $budget !== 'all' || $capacity !== 'all' || $venueType !== 'all' || trim($search) !== '' || $attractionId !== null);
+$canonicalUrl = 'https://boutiquehotelsudaipur.com/hotels';
 
 require_once 'includes/header.php';
 ?>

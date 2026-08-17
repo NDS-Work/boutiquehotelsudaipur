@@ -9,6 +9,40 @@ if ($uri !== '/' && file_exists(__DIR__ . urldecode($uri))) {
     return false;
 }
 
+// /hotels/collection/slug → hotels.php?collection=slug
+if (preg_match('#^/hotels/collection/([^/]+)/?$#', $uri, $m)) {
+    $_GET['collection'] = $m[1];
+    require __DIR__ . '/hotels.php';
+    exit;
+}
+
+// /hotels/attraction/slug → hotels.php?attraction=slug
+if (preg_match('#^/hotels/attraction/([^/]+)/?$#', $uri, $m)) {
+    $_GET['attraction'] = $m[1];
+    require __DIR__ . '/hotels.php';
+    exit;
+}
+
+// /hotels/occasion/slug → hotels.php?occasion=slug
+if (preg_match('#^/hotels/occasion/([^/]+)/?$#', $uri, $m)) {
+    $_GET['occasion'] = $m[1];
+    require __DIR__ . '/hotels.php';
+    exit;
+}
+
+// /hotels/amenity/slug → hotels.php?amenitySlug=slug
+if (preg_match('#^/hotels/amenity/([^/]+)/?$#', $uri, $m)) {
+    $_GET['amenitySlug'] = $m[1];
+    require __DIR__ . '/hotels.php';
+    exit;
+}
+
+// /hotels → hotels.php
+if (preg_match('#^/hotels/?$#', $uri)) {
+    require __DIR__ . '/hotels.php';
+    exit;
+}
+
 // /hotels/slug → venue-detail.php?slug=slug
 if (preg_match('#^/hotels/([^/]+)/?$#', $uri, $m)) {
     $_GET['slug'] = $m[1];

@@ -1,6 +1,7 @@
 <?php
 $metaTitle       = '10 Best Boutique Hotels in Udaipur Near Lake Pichola | Boutique Hotels In Udaipur';
 $metaDescription = 'Discover the 10 best boutique hotels in Udaipur near Lake Pichola — curated for heritage authenticity, lake views, romantic ambiance, and personalized Mewari hospitality.';
+$canonicalUrl    = 'https://boutiquehotelsudaipur.com/10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola';
 $schemaJson = json_encode([
     '@context' => 'https://schema.org',
     '@graph'   => [
@@ -652,7 +653,7 @@ require_once 'includes/header.php';
           <h2 style="color: #a67c52; margin-top:0.5rem; font-size:1.4rem;">The Timeless Allure of Udaipur's Boutique Hotels</h2>
           <p>Whether you are planning a romantic getaway, cultural vacation, luxury Rajasthan tour, or heritage escape, the boutique hotels in Udaipur near Lake Pichola offer some of the most unforgettable stay experiences in India.</p>
           <p>Among them, <strong style="color:var(--brand-primary,#c9913d);">Kaladwas Lal Haveli</strong> stands out for its authentic 300-year-old heritage character, personalized hospitality, traditional Mewari architecture, and immersive cultural experiences — making it one of the finest boutique hotels in Udaipur for travelers seeking timeless Rajasthan luxury and heritage charm.</p>
-          <a href="/hotels.php" class="btn btn-primary-custom">Explore All Boutique Hotels</a>
+          <a href="/hotels" class="btn btn-primary-custom">Explore All Boutique Hotels</a>
         </div>
 
       </article>

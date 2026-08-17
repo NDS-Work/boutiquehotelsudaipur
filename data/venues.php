@@ -637,15 +637,18 @@ function getOccasions(): array {
         return $occasions;
     }
  
-    $db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
-    $result = $db->query('SELECT id, occasion_name FROM link_occasion ORDER BY id ASC');
- 
-    $occasions = [];
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $occasions[] = $row;
+    $db = _getVenueSqliteDb();
+    if (!$db) {
+        return [];
     }
- 
-    $db->close();
+
+    try {
+        $stmt = $db->query('SELECT id, occasion_name FROM link_occasion ORDER BY id ASC');
+        $occasions = $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
+    } catch (Exception $e) {
+        $occasions = [];
+    }
+
     return $occasions;
 }
 

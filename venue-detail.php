@@ -5,7 +5,7 @@ $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 $venue = getVenueBySlug($slug);
 
 if (!$venue) {
-    header('Location: /venues.php');
+    header('Location: /hotels');
     exit;
 }
 
@@ -102,6 +102,7 @@ $metaTitle = $venue['name'] . ' | Boutique Hotels In Udaipur';
 $metaDescription = !empty($venue['description'])
     ? strip_tags($venue['description'])
     : 'Discover details, images, and pricing for ' . $venue['name'] . ' in Udaipur. Perfect for weddings and events.';
+$canonicalUrl = 'https://boutiquehotelsudaipur.com/hotels/' . ($venue['slug'] ?? '');
 
 // ── Schema markup ─────────────────────────────────────────────
 $schema = [
@@ -169,7 +170,7 @@ require_once 'includes/header.php';
     <div class="container">
         <!-- Back Button -->
         <div class="mb-4">
-            <a href="/hotels.php" class="text-decoration-none d-inline-flex align-items-center" style="color: var(--text-secondary);">
+            <a href="/hotels" class="text-decoration-none d-inline-flex align-items-center" style="color: var(--text-secondary);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                 </svg>

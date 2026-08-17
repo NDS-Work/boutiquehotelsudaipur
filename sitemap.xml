@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage -->
+  <!-- Homepage & Core Pages -->
   <url>
     <loc>https://boutiquehotelsudaipur.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
-  <!-- Main listing pages -->
+  <!-- Main listing & Category pages -->
   <url>
     <loc>https://boutiquehotelsudaipur.com/hotels</loc>
     <changefreq>daily</changefreq>
@@ -30,12 +40,87 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/collection/best-boutique-hotels-in-udaipur</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/collection/top-rated-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/collection/royal-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/collection/modern-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/collection/eco-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/collection/boutique-villas</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/collection/artistic-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://boutiquehotelsudaipur.com/hotels/occasion/honeymoon-boutique-hotels</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://boutiquehotelsudaipur.com/hotels/occasion/couple-friendly-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/romantic-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/wedding-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/family-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/weekend-getaway-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/staycation-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/business-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/girls-getaway-boutique-hotels</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/hotels/occasion/pet-friendly--boutique-hotels</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -63,6 +148,11 @@
   </url>
   <url>
     <loc>https://boutiquehotelsudaipur.com/10-Famous-Heritage-Hotels-in-Rajasthan-You-Must-Experience</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://boutiquehotelsudaipur.com/why-udaipur-is-becoming-a-global-luxury-travel-destination</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

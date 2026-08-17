@@ -1,5 +1,8 @@
 <?php
-$pageTitle = "10 Best Boutique Hotels in Udaipur Near Lake Pichola";
+$pageTitle       = "Why Udaipur Is Becoming a Global Luxury Travel Destination";
+$metaTitle       = "Why Udaipur Is Becoming a Global Luxury Travel Destination | Boutique Hotels In Udaipur";
+$metaDescription = "Explore why Udaipur is emerging as a top global luxury travel destination, from royal Mewari heritage and lake views to intimate boutique stays.";
+$canonicalUrl    = "https://boutiquehotelsudaipur.com/why-udaipur-is-becoming-a-global-luxury-travel-destination";
 require_once 'includes/header.php';
 ?>
 

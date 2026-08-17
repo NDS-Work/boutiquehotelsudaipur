@@ -1,6 +1,7 @@
 <?php
 $metaTitle       = 'Top 5 Boutique Hotels in Udaipur for Couples and Luxury Travelers | Boutique Hotels In Udaipur';
 $metaDescription = 'A handpicked guide to the most romantic boutique hotels in Udaipur for couples, honeymooners, and luxury travelers.';
+$canonicalUrl    = 'https://boutiquehotelsudaipur.com/Top-5-Boutique-Hotels-in-Udaipur-for-Couples-&-Luxury-Travelers';
 $schemaJson = json_encode([
     '@context' => 'https://schema.org',
     '@graph'   => [
@@ -8,7 +9,7 @@ $schemaJson = json_encode([
             '@type'         => 'Article',
             'headline'      => 'Top 5 Boutique Hotels in Udaipur for Couples and Luxury Travelers',
             'description'   => 'A handpicked guide to the most romantic and luxurious boutique hotels in Udaipur, perfect for couples, honeymooners, and luxury travelers seeking heritage stays.',
-            'url'           => 'https://boutiquehotelsudaipur.com/Top-5-Boutique-Hotels-in-Udaipur-for-Couples-and-Luxury-Travelers',
+            'url'           => 'https://boutiquehotelsudaipur.com/Top-5-Boutique-Hotels-in-Udaipur-for-Couples-&-Luxury-Travelers',
             'datePublished' => '2026-01-01',
             'dateModified'  => date('Y-m-d'),
             'publisher'     => ['@type' => 'Organization', 'name' => 'Boutique Hotels In Udaipur', 'url' => 'https://boutiquehotelsudaipur.com'],
@@ -653,7 +654,7 @@ The property is famous for its handcrafted interiors, royal artwork, luxurious s
           <h2 style="color: #a67c52; margin-top:0.5rem; font-size:1.4rem;">The Timeless Allure of Udaipur's Boutique Hotels</h2>
           <p>Whether you are planning a romantic getaway, cultural vacation, luxury Rajasthan tour, or heritage escape, the boutique hotels in Udaipur near Lake Pichola offer some of the most unforgettable stay experiences in India.</p>
           <p>Among them, <strong style="color:var(--brand-primary,#c9913d);">Kaladwas Lal Haveli</strong> stands out for its authentic 300-year-old heritage character, personalized hospitality, traditional Mewari architecture, and immersive cultural experiences — making it one of the finest boutique hotels in Udaipur for travelers seeking timeless Rajasthan luxury and heritage charm.</p>
-          <a href="/hotels.php" class="btn btn-primary-custom">Explore All Boutique Hotels</a>
+          <a href="/hotels" class="btn btn-primary-custom">Explore All Boutique Hotels</a>
         </div>
 
       </article>

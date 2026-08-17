@@ -1,6 +1,7 @@
 <?php
 $metaTitle       = 'Top 10 Hidden Boutique Hotels in Rajasthan with Royal Hospitality | Boutique Hotels In Udaipur';
 $metaDescription = 'Discover 10 hidden boutique hotels across Rajasthan offering royal heritage hospitality, palace architecture, and curated cultural experiences.';
+$canonicalUrl    = 'https://boutiquehotelsudaipur.com/Top-10-Hidden-Boutique-Hotels-in-Rajasthan-with-Royal-Hospitality';
 $schemaJson = json_encode([
     '@context' => 'https://schema.org',
     '@graph'   => [
@@ -660,7 +661,7 @@ require_once 'includes/header.php';
                                 stands out for its authentic 300-year-old heritage architecture, personalized
                                 hospitality, traditional Mewari charm, and immersive cultural experiences — making it
                                 one of Rajasthan's finest hidden boutique heritage hotels.</p>
-                            <a href="/hotels.php" class="btn-primary-custom">Explore All Boutique Hotels</a>
+                            <a href="/hotels" class="btn-primary-custom">Explore All Boutique Hotels</a>
                         </div>
 
                     </article>

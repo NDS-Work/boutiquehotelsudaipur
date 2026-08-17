@@ -1,6 +1,7 @@
 <?php
 $metaTitle       = '10 Famous Heritage Hotels in Rajasthan You Must Experience | Boutique Hotels In Udaipur';
 $metaDescription = 'A curated guide to 10 famous heritage hotels in Rajasthan — from restored havelis to palace stays — you must experience at least once.';
+$canonicalUrl    = 'https://boutiquehotelsudaipur.com/10-Famous-Heritage-Hotels-in-Rajasthan-You-Must-Experience';
 $schemaJson = json_encode([
     '@context' => 'https://schema.org',
     '@graph'   => [

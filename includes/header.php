@@ -13,6 +13,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	<meta name="google-site-verification" content="EbtFdPmBQrCIdFyGIR8SW7JUUroVhsOEolQfRyW-41I" />
     <title><?php echo isset($metaTitle) ? htmlspecialchars($metaTitle) : 'Explore Udaipur’s Best Boutique Hotels | Compare 500+ Stays, Prices & Amenities'; ?></title>
     <meta name="description" content="<?php echo isset($metaDescription) ? htmlspecialchars($metaDescription) : 'Explore 500+ boutique hotels in Udaipur including luxury palaces, heritage havelis, and budget stays. Compare prices, locations, and amenities to find your perfect stay in the City of Lakes.'; ?>">
+    <?php
+    if (empty($canonicalUrl)) {
+        $canonicalHost = 'https://boutiquehotelsudaipur.com';
+        $reqPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
+        $reqPath = preg_replace('/\.php$/i', '', $reqPath);
+        if ($reqPath === '' || $reqPath === '/' || $reqPath === '/index') {
+            $canonicalUrl = $canonicalHost . '/';
+        } else {
+            $canonicalUrl = $canonicalHost . '/' . trim($reqPath, '/');
+        }
+    }
+    ?>
+    <link rel="canonical" href="<?php echo htmlspecialchars($canonicalUrl); ?>">
     <?php if (!empty($schemaJson)): ?>
 <script type="application/ld+json">
 <?php echo $schemaJson; ?>
@@ -52,7 +65,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 })();
 </script>
-</head>
 </head>
 
 <body>

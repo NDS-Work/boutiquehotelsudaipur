@@ -184,14 +184,30 @@ $hasActiveFilters = (
     $occasionId   > 0
 );
 
-// ── Page heading ───────────────────────────────────────────────
+// ── Page heading & Canonical ──────────────────────────────────
 $pageHeading =
     $collectionName !== null ? ''    . $collectionName :
     ($attractionName !== null ? 'Hotels near '  . $attractionName :
     ($occasionName   !== null ? $occasionName :
     ($amenityName    !== null ? 'Hotels with '  . $amenityName :
     'Explore All Boutique Hotels in Udaipur')));
-    
+
+if (!empty($collectionSlug)) {
+    $canonicalUrl = 'https://boutiquehotelsudaipur.com/hotels/collection/' . rawurlencode($collectionSlug);
+    $metaTitle = ($collectionName ?: 'Boutique Hotels') . ' in Udaipur | Boutique Hotels In Udaipur';
+} elseif (!empty($occasionSlug)) {
+    $canonicalUrl = 'https://boutiquehotelsudaipur.com/hotels/occasion/' . rawurlencode($occasionSlug);
+    $metaTitle = ($occasionName ?: 'Occasion Stays') . ' in Udaipur | Boutique Hotels In Udaipur';
+} elseif (!empty($attractionSlug)) {
+    $canonicalUrl = 'https://boutiquehotelsudaipur.com/hotels/attraction/' . rawurlencode($attractionSlug);
+    $metaTitle = 'Hotels near ' . ($attractionName ?: 'Attraction') . ' Udaipur | Boutique Hotels In Udaipur';
+} elseif (!empty($amenitySlug)) {
+    $canonicalUrl = 'https://boutiquehotelsudaipur.com/hotels/amenity/' . rawurlencode($amenitySlug);
+    $metaTitle = 'Hotels with ' . ($amenityName ?: 'Amenities') . ' in Udaipur | Boutique Hotels In Udaipur';
+} else {
+    $canonicalUrl = 'https://boutiquehotelsudaipur.com/hotels';
+    $metaTitle = 'All Boutique Hotels in Udaipur | Compare Stays, Prices & Amenities';
+}
 
 require_once 'includes/header.php';
 ?>

@@ -145,19 +145,22 @@
                 <h5 class="text-uppercase fw-bold mb-3 text-center mt-4" style="color: #dfddd6;">Travel guides</h5>
                 <ul style="list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 2rem;">
                      <li style="display: flex; flex-direction: column; align-items: center; gap: 10px;"> 
-                        <a href="10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola"><img src="https://boutiquehotelsudaipur.com//assets/footer-image/lake-pichola.webp"  alt="Travel Guide 1" style="width: 181px; height: 99px; object-fit: cover;"></a>
+                        <a href="/10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola"><img src="/assets/footer-image/lake-pichola.webp"  alt="10 Best Boutique Hotels in Udaipur Near Lake Pichola" style="width: 181px; height: 99px; object-fit: cover;"></a>
                     </li>
                     <li style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                        <a href="Top-5-Boutique-Hotels-in-Udaipur-for-Couples-&-Luxury-Travelers"><img src="https://boutiquehotelsudaipur.com//assets/footer-image/couple-&-luxury.webp"  alt="Travel Guide 1" style="width: 180px; height: 99px; object-fit: cover;"></a>
+                        <a href="/Top-5-Boutique-Hotels-in-Udaipur-for-Couples-&-Luxury-Travelers"><img src="/assets/footer-image/couple-&-luxury.webp"  alt="Top 5 Boutique Hotels in Udaipur for Couples & Luxury Travelers" style="width: 180px; height: 99px; object-fit: cover;"></a>
                     </li>
                     <li style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                        <a href="10-Famous-Heritage-Hotels-in-Udaipur-with-Traditional-Mewari-Charm"><img src="https://boutiquehotelsudaipur.com//assets/footer-image/Traditional-mewari-charm.webp"  alt="Travel Guide 1" style="width: 180px; height: 99px; object-fit: cover;"></a>
+                        <a href="/10-Famous-Heritage-Hotels-in-Udaipur-with-Traditional-Mewari-Charm"><img src="/assets/footer-image/Traditional-mewari-charm.webp"  alt="10 Famous Heritage Hotels in Udaipur with Traditional Mewari Charm" style="width: 180px; height: 99px; object-fit: cover;"></a>
                     </li>
                     <li style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                        <a href="Top-10-Hidden-Boutique-Hotels-in-Rajasthan-with-Royal-Hospitality"><img src="https://boutiquehotelsudaipur.com//assets/footer-image/preview.webp"  alt="Travel Guide 1" style="width: 180px; height: 99px; object-fit: cover;"></a>
+                        <a href="/Top-10-Hidden-Boutique-Hotels-in-Rajasthan-with-Royal-Hospitality"><img src="/assets/footer-image/preview.webp"  alt="Top 10 Hidden Boutique Hotels in Rajasthan with Royal Hospitality" style="width: 180px; height: 99px; object-fit: cover;"></a>
                     </li>
                     <li style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                        <a href="10-Famous-Heritage-Hotels-in-Rajasthan-You-Must-Experience"><img src="https://boutiquehotelsudaipur.com//assets/footer-image/heritage-hotel-rajasthan.webp"  alt="Travel Guide 1" style="width: 180px; height: 99px; object-fit: cover;"></a>
+                        <a href="/10-Famous-Heritage-Hotels-in-Rajasthan-You-Must-Experience"><img src="/assets/footer-image/heritage-hotel-rajasthan.webp"  alt="10 Famous Heritage Hotels in Rajasthan You Must Experience" style="width: 180px; height: 99px; object-fit: cover;"></a>
+                    </li>
+                    <li style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <a href="/why-udaipur-is-becoming-a-global-luxury-travel-destination"><img src="/assets/footer-image/Picture4.jpg"  alt="Why Udaipur Is Becoming a Global Luxury Travel Destination" style="width: 180px; height: 99px; object-fit: cover;"></a>
                     </li>
                 </ul>
             </div>     

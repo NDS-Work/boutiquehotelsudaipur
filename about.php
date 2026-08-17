@@ -2,6 +2,7 @@
 $pageTitle = "About";
 $metaTitle = "About Us | Boutique Hotels In Udaipur";
 $metaDescription = "Boutique Hotels In Udaipur is an independent directory maintained by Udaipur-based hospitality researchers helping travelers find the best boutique heritage stays in Rajasthan.";
+$canonicalUrl = "https://boutiquehotelsudaipur.com/about";
 require_once 'includes/header.php';
 ?>
 

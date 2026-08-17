@@ -1,6 +1,7 @@
 <?php
 $metaTitle       = '10 Famous Heritage Hotels in Udaipur with Traditional Mewari Charm | Boutique Hotels In Udaipur';
 $metaDescription = 'Explore 10 famous heritage hotels in Udaipur that celebrate traditional Mewari architecture, culture, and authentic Rajasthani hospitality.';
+$canonicalUrl    = 'https://boutiquehotelsudaipur.com/10-Famous-Heritage-Hotels-in-Udaipur-with-Traditional-Mewari-Charm';
 $schemaJson = json_encode([
     '@context' => 'https://schema.org',
     '@graph'   => [
@@ -639,7 +640,7 @@ The property beautifully reflects traditional Rajasthan craftsmanship and royal 
           <h2 style="color: #a67c52; margin-top:0.5rem; font-size:1.4rem;">The Timeless Allure of Udaipur's Boutique Hotels</h2>
           <p>From grand royal palaces and traditional havelis to intimate boutique heritage stays, heritage hotels in Udaipur continue to offer some of India’s most unforgettable travel experiences.</p>
           <p>Among them, <strong style="color:var(--brand-primary,#c9913d);">Kaladwas Lal Haveli</strong> stands out for its authentic 300-year-old heritage character, personalized hospitality, traditional Mewari architecture, and immersive cultural experiences — making it one of the finest boutique hotels in Udaipur for travelers seeking timeless Rajasthan luxury and heritage charm.</p>
-          <a href="/hotels.php" class="btn btn-primary-custom">Explore All Boutique Hotels</a>
+          <a href="/hotels" class="btn btn-primary-custom">Explore All Boutique Hotels</a>
         </div>
 
       </article>

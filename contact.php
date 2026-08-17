@@ -1,5 +1,6 @@
 <?php
 $pageTitle = "Contact";
+$canonicalUrl = "https://boutiquehotelsudaipur.com/contact";
 $messageSent = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
