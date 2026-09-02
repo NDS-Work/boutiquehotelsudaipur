@@ -37,7 +37,7 @@ require_once 'includes/header.php';
         }
 
         .content {
-            color: #888680bd;
+            color: #454545;
         }
 
         /* Meta bar */
@@ -133,7 +133,7 @@ require_once 'includes/header.php';
             padding: 10px 14px;
             border-radius: 4px;
             font-size: 0.85rem;
-            color: #c8b49a;
+            color: #a67c52;
         }
 
         .criteria-item svg {
@@ -286,7 +286,7 @@ require_once 'includes/header.php';
             padding: 14px 16px;
             border-radius: 4px;
             font-size: 0.85rem;
-            color: #c8b49a;
+            color: #a67c52;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -352,7 +352,7 @@ require_once 'includes/header.php';
         }
 
         .final-box p {
-            color: #c8b49a;
+            color: #918371;
             margin-bottom: 1.5rem;
             font-size: 0.98rem;
             line-height: 1.8;

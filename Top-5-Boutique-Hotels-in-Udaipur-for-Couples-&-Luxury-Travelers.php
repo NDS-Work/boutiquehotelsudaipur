@@ -33,7 +33,7 @@ require_once 'includes/header.php';
 
 <style>
   .content {
-    color: #888680bd;
+    color: #454545;
 }
   /* Meta bar */
   .blog-meta {
@@ -109,7 +109,7 @@ require_once 'includes/header.php';
     padding: 10px 14px;
     border-radius: 4px;
     font-size: 0.85rem;
-    color: #c8b49a;
+    color: #a67c52;
   }
   .criteria-item svg { color: var(--brand-primary, #c9913d); flex-shrink: 0; }
 
@@ -238,7 +238,7 @@ require_once 'includes/header.php';
     padding: 14px 16px;
     border-radius: 4px;
     font-size: 0.85rem;
-    color: #c8b49a;
+    color: #a67c52;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -287,7 +287,7 @@ require_once 'includes/header.php';
     margin-top: 3rem;
     text-align: center;
   }
-  .final-box p { color: #c8b49a; margin-bottom: 1.5rem; font-size: 0.98rem; line-height: 1.8; }
+  .final-box p { color: #918371; margin-bottom: 1.5rem; font-size: 0.98rem; line-height: 1.8; }
 
   /* Sidebar */
   .sidebar-widget {
