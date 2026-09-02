@@ -14,7 +14,7 @@
 Thumbs.db
 .idea/
 .vscode/
-new.sqlite.db
+data/new.sqlite.db
 
 # PHP Tools & Cache
 .phpunit.result.cache
