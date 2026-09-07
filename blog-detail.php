@@ -189,6 +189,15 @@ require_once __DIR__ . '/includes/header.php';
     color: #454545;
   }
 
+  /* Automatically hide empty paragraphs, extra Quill spacing breaks, and blank p tags */
+  .blog-body p:empty,
+  .blog-body p:has(> br:only-child),
+  .blog-body p:has(> br:first-child:last-child) {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .blog-body ul, .blog-body ol {
     margin-bottom: 1.5rem;
     padding-left: 28px;
