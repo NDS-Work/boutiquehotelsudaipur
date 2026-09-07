@@ -9,8 +9,16 @@ Options -Indexes
 RewriteEngine On
 
 # ─────────────────────────────────────────────────────────────
-# 0. Pass real files and directories through untouched
+# 0a. Explicit Blog Routes (Prioritized before directory checks)
 # ─────────────────────────────────────────────────────────────
+RewriteRule ^blogs/category/([^/]+)/?$  blog-category.php?slug=$1 [L,QSA]
+RewriteRule ^blogs/?$                   blogs.php [L,QSA]
+RewriteRule ^blog/([^/]+)/?$            blog-detail.php?slug=$1 [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 0b. Pass real files and directories through untouched (except blogs)
+# ─────────────────────────────────────────────────────────────
+RewriteCond %{REQUEST_URI} !^/blogs/?$ [NC]
 RewriteCond %{REQUEST_FILENAME} -d [OR]
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
@@ -85,13 +93,6 @@ RewriteRule ^hotels/([^/]+)/?$  venue-detail.php?slug=$1  [L,QSA]
 # 6. Admin clean URLs: /admin/page  →  admin/page.php
 # ─────────────────────────────────────────────────────────────
 RewriteRule ^admin/([^/]+)/?$  admin/$1.php  [L,QSA]
-
-# ─────────────────────────────────────────────────────────────
-# 6b. Dynamic Blog Routes
-# ─────────────────────────────────────────────────────────────
-RewriteRule ^blogs/category/([^/]+)/?$  blog-category.php?slug=$1 [L,QSA]
-RewriteRule ^blogs/?$                   blogs.php [L,QSA]
-RewriteRule ^blog/([^/]+)/?$            blog-detail.php?slug=$1 [L,QSA]
 
 # ─────────────────────────────────────────────────────────────
 # 6c. Legacy Blog article routes
