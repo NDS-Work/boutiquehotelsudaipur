@@ -87,7 +87,14 @@ RewriteRule ^hotels/([^/]+)/?$  venue-detail.php?slug=$1  [L,QSA]
 RewriteRule ^admin/([^/]+)/?$  admin/$1.php  [L,QSA]
 
 # ─────────────────────────────────────────────────────────────
-# 6b. Blog article routes
+# 6b. Dynamic Blog Routes
+# ─────────────────────────────────────────────────────────────
+RewriteRule ^blogs/category/([^/]+)/?$  blog-category.php?slug=$1 [L,QSA]
+RewriteRule ^blogs/?$                   blogs.php [L,QSA]
+RewriteRule ^blog/([^/]+)/?$            blog-detail.php?slug=$1 [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 6c. Legacy Blog article routes
 # ─────────────────────────────────────────────────────────────
 RewriteRule ^10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola/?$ 10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola.php [L,QSA]
 RewriteRule ^Top-5-Boutique-Hotels-in-Udaipur-for-Couples-and-Luxury-Travelers/?$ Top-5-Boutique-Hotels-in-Udaipur-for-Couples-and-Luxury-Travelers.php [L,QSA]
@@ -100,3 +107,9 @@ RewriteRule ^10-Famous-Heritage-Hotels-in-Rajasthan-You-Must-Experience/?$ 10-Fa
 # ─────────────────────────────────────────────────────────────
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^/]+)/?$  $1.php  [L,QSA]
+
+# ─────────────────────────────────────────────────────────────
+# 8. Error document
+# ─────────────────────────────────────────────────────────────
+ErrorDocument 404 /404.php
+

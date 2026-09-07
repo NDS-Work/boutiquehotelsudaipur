@@ -50,6 +50,26 @@ if (preg_match('#^/hotels/([^/]+)/?$#', $uri, $m)) {
     exit;
 }
 
+// /blogs/category/slug → blog-category.php?slug=slug
+if (preg_match('#^/blogs/category/([^/]+)/?$#', $uri, $m)) {
+    $_GET['slug'] = $m[1];
+    require __DIR__ . '/blog-category.php';
+    exit;
+}
+
+// /blogs → blogs.php
+if (preg_match('#^/blogs/?$#', $uri)) {
+    require __DIR__ . '/blogs.php';
+    exit;
+}
+
+// /blog/slug → blog-detail.php?slug=slug
+if (preg_match('#^/blog/([^/]+)/?$#', $uri, $m)) {
+    $_GET['slug'] = $m[1];
+    require __DIR__ . '/blog-detail.php';
+    exit;
+}
+
 // /admin/page → admin/page.php
 if (preg_match('#^/admin/([^/]+)/?$#', $uri, $m)) {
     $file = __DIR__ . '/admin/' . $m[1] . '.php';
@@ -68,5 +88,12 @@ if (preg_match('#^/([^/]+)/?$#', $uri, $m)) {
     }
 }
 
-// Default: index.php
-require __DIR__ . '/index.php';
+// Root route
+if ($uri === '/' || $uri === '') {
+    require __DIR__ . '/index.php';
+    exit;
+}
+
+// 404 for anything else not matched
+require __DIR__ . '/404.php';
+

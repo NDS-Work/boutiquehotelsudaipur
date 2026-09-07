@@ -45,37 +45,25 @@ require_once __DIR__ . '/vendor/autoload.php';
 Dotenv\Dotenv::createImmutable(__DIR__)->load();
 
 try {
-    $db = new SQLite3(__DIR__ . '/data/new.sqlite.db');
-    $db->busyTimeout(3000); // Wait up to 3 seconds for lock
+    require_once __DIR__ . '/data/db.php';
+    $db = getDbConnection();
     $stmt = $db->prepare('INSERT INTO link_inqueries (name, email, phone, venue_name, message, ip_address, ip_city, utm_source, utm_medium, utm_campaign, utm_term, utm_content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt->bindValue(1, $name);
-    $stmt->bindValue(2, $email);
-    $stmt->bindValue(3, $phone);
-    $stmt->bindValue(4, $venue_name);
-    $stmt->bindValue(5, $message);
-    $stmt->bindValue(6, $ip_address);
-    $stmt->bindValue(7, $ip_city);
-    $stmt->bindValue(8, $utm_source);
-    $stmt->bindValue(9, $utm_medium);
-    $stmt->bindValue(10, $utm_campaign);
-    $stmt->bindValue(11, $utm_term);
-    $stmt->bindValue(12, $utm_content);
-        // Retry logic for database locked
-        $maxRetries = 5;
-        $retryDelay = 200000; // 0.2 seconds
-        $result = false;
-        for ($i = 0; $i < $maxRetries; $i++) {
-            $result = $stmt->execute();
-            if ($result !== false) break;
-            if ($db->lastErrorCode() === 6) { // SQLITE_BUSY (database is locked)
-                usleep($retryDelay);
-            } else {
-                break;
-            }
-        }
-        if ($result) {
-            if ($stmt) $stmt->close();
-            if ($db) $db->close();
+    $stmt->execute([
+        $name,
+        $email,
+        $phone,
+        $venue_name,
+        $message,
+        $ip_address,
+        $ip_city,
+        $utm_source,
+        $utm_medium,
+        $utm_campaign,
+        $utm_term,
+        $utm_content,
+    ]);
+    $result = true;
+    if ($result) {
             // Send email using PHPMailer and .env variables
             try {
                 ini_set('log_errors', '1');

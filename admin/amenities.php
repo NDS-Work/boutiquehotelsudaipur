@@ -5,7 +5,8 @@ requireLogin();
 $currentPage = 'amenities';
 $pageTitle = 'Amenities';
 
-$db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
+require_once __DIR__ . '/../data/db.php';
+$db = getDbConnection();
 
 // Handle form submission for adding/editing amenities
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,19 +21,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         if ($id) {
             $stmt = $db->prepare('UPDATE link_amenities SET name = :name, icon = :icon, icon_type_name = :icon_type_name WHERE id = :id');
-            $stmt->bindValue(':name',      $name,         SQLITE3_TEXT);
-            $stmt->bindValue(':icon',      $icon ?: null, SQLITE3_TEXT);
-            $stmt->bindValue(':icon_type_name', $icon_type_name, SQLITE3_TEXT);
-            $stmt->bindValue(':id',        (int)$id,      SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute([
+                ':name'           => $name,
+                ':icon'           => $icon ?: null,
+                ':icon_type_name' => $icon_type_name,
+                ':id'             => (int)$id,
+            ]);
         } else {
             $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/', '-', $name)));
             $stmt = $db->prepare('INSERT INTO link_amenities (name, slug, icon, icon_type_name, is_active) VALUES (:name, :slug, :icon, :icon_type_name, 1)');
-            $stmt->bindValue(':name',      $name,         SQLITE3_TEXT);
-            $stmt->bindValue(':slug',      $slug,         SQLITE3_TEXT);
-            $stmt->bindValue(':icon',      $icon ?: null, SQLITE3_TEXT);
-            $stmt->bindValue(':icon_type_name', $icon_type_name, SQLITE3_TEXT);
-            $stmt->execute();
+            $stmt->execute([
+                ':name'           => $name,
+                ':slug'           => $slug,
+                ':icon'           => $icon ?: null,
+                ':icon_type_name' => $icon_type_name,
+            ]);
         }
         header('Location: /admin/amenities.php');
         exit;
@@ -43,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['delete'])) {
     $id   = (int)$_GET['delete'];
     $stmt = $db->prepare('DELETE FROM link_amenities WHERE id = :id');
-    $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
-    $stmt->execute();
+    $stmt->execute([':id' => $id]);
     header('Location: /admin/amenities.php');
     exit;
 }
@@ -53,11 +55,12 @@ if (isset($_GET['delete'])) {
 if (isset($_GET['toggle'])) {
     $id   = (int)$_GET['toggle'];
     $stmt = $db->prepare('UPDATE link_amenities SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE id = :id');
-    $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
-    $stmt->execute();
+    $stmt->execute([':id' => $id]);
 
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-        $row = $db->querySingle("SELECT is_active FROM link_amenities WHERE id = $id");
+        $stmtRow = $db->prepare("SELECT is_active FROM link_amenities WHERE id = ?");
+        $stmtRow->execute([$id]);
+        $row = $stmtRow->fetchColumn();
         header('Content-Type: application/json');
         echo json_encode(['is_active' => (int)$row]);
         exit;
@@ -67,11 +70,7 @@ if (isset($_GET['toggle'])) {
 }
 
 // Fetch all amenities
-$amenitiesResult = $db->query('SELECT * FROM link_amenities ORDER BY name');
-$amenities = [];
-while ($row = $amenitiesResult->fetchArray(SQLITE3_ASSOC)) {
-    $amenities[] = $row;
-}
+$amenities = $db->query('SELECT * FROM link_amenities ORDER BY name')->fetchAll();
 
 require_once __DIR__ . '/layout-header.php';
 ?>

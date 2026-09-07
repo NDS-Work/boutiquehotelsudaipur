@@ -5,7 +5,8 @@ requireLogin();
 $currentPage = 'occasion';
 $pageTitle = 'Occasions';
 
-$db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
+require_once __DIR__ . '/../data/db.php';
+$db = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verifyCsrf();
@@ -15,24 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = trim($_POST['occasion_name'] ?? '');
         if ($name !== '') {
             $stmt = $db->prepare('INSERT INTO link_occasion (occasion_name) VALUES (:name)');
-            $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-            $stmt->execute();
+            $stmt->execute([':name' => $name]);
         }
     } elseif ($action === 'edit') {
         $id   = (int)($_POST['id'] ?? 0);
         $name = trim($_POST['new_occasion_name'] ?? '');
         if ($id > 0 && $name !== '') {
             $stmt = $db->prepare('UPDATE link_occasion SET occasion_name = :name WHERE id = :id');
-            $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-            $stmt->bindValue(':id',   $id,   SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute([':name' => $name, ':id' => $id]);
         }
     } elseif ($action === 'delete') {
         $id = (int)($_POST['id'] ?? 0);
         if ($id > 0) {
             $stmt = $db->prepare('DELETE FROM link_occasion WHERE id = :id');
-            $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute([':id' => $id]);
         }
     }
 
@@ -40,11 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-$occasions = [];
-$result = $db->query('SELECT id, occasion_name FROM link_occasion ORDER BY id ASC');
-while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-    $occasions[] = $row;
-}
+$occasions = $db->query('SELECT id, occasion_name FROM link_occasion ORDER BY id ASC')->fetchAll();
 
 require_once __DIR__ . '/layout-header.php';
 ?>

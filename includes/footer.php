@@ -10,7 +10,7 @@
                         ?>
                         
                         <!-- Footer -->
-    <footer style="background-color: #4b1111; border-top: 1px solid #3f4816; margin-top: 6rem;">
+    <footer style="background-color: #4b1111; border-top: 1px solid #c9913d; margin-top: 6rem;">
         <div class="container py-5">
             <div class="row g-4">
                 <!-- Brand Section -->
@@ -142,8 +142,10 @@
             </div> 
             <!-- Rohit bhaiya ne bola file ke naam ke liye same as title of the page earlier article-01...  -->
             <div class="travel-guides">
-                <h5 class="text-uppercase fw-bold mb-3 text-center mt-4" style="color: #dfddd6;">Travel guides</h5>
-                <ul style="list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 2rem;">
+                <div class="text-center mt-4">
+                    <h5 class="text-uppercase fw-bold mb-4" style="color: #dfddd6;">Travel Guides</h5>
+                </div>
+                <ul style="list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 1.5rem;">
                      <li style="display: flex; flex-direction: column; align-items: center; gap: 10px;"> 
                         <a href="/10-Best-Boutique-Hotels-in-Udaipur-Near-Lake-Pichola"><img src="/assets/footer-image/lake-pichola.webp"  alt="10 Best Boutique Hotels in Udaipur Near Lake Pichola" style="width: 181px; height: 99px; object-fit: cover;"></a>
                     </li>

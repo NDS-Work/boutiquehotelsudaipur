@@ -55,26 +55,28 @@ if ($ip_address) {
 }
 
 try {
-    $db = new SQLite3(__DIR__ . '/data/new.sqlite.db');
+    require_once __DIR__ . '/data/db.php';
+    $db = getDbConnection();
     // Set default status_id to 1 (Pending)
     $status_id = 1;
     $stmt = $db->prepare('INSERT INTO link_book (guest_name, guest_count, email, phone_number, check_in_date, check_out_date, hotel_name, status_id, ip_address, ip_city, utm_source, utm_medium, utm_campaign, utm_term, utm_content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    $stmt->bindValue(1, $guest_name, SQLITE3_TEXT);
-    $stmt->bindValue(2, $guest_count, SQLITE3_INTEGER);
-    $stmt->bindValue(3, $email, SQLITE3_TEXT);
-    $stmt->bindValue(4, $phone, SQLITE3_TEXT);
-    $stmt->bindValue(5, $check_in_date, SQLITE3_TEXT);
-    $stmt->bindValue(6, $check_out_date, SQLITE3_TEXT);
-    $stmt->bindValue(7, $hotel_name, SQLITE3_TEXT);
-    $stmt->bindValue(8, $status_id, SQLITE3_INTEGER);
-    $stmt->bindValue(9, $ip_address, SQLITE3_TEXT);
-    $stmt->bindValue(10, $ip_city, SQLITE3_TEXT);
-    $stmt->bindValue(11, $utm_source, SQLITE3_TEXT);
-    $stmt->bindValue(12, $utm_medium, SQLITE3_TEXT);
-    $stmt->bindValue(13, $utm_campaign, SQLITE3_TEXT);
-    $stmt->bindValue(14, $utm_term, SQLITE3_TEXT);
-    $stmt->bindValue(15, $utm_content, SQLITE3_TEXT);
-    $result = $stmt->execute();
+    $result = $stmt->execute([
+        $guest_name,
+        $guest_count,
+        $email,
+        $phone,
+        $check_in_date,
+        $check_out_date,
+        $hotel_name,
+        $status_id,
+        $ip_address,
+        $ip_city,
+        $utm_source,
+        $utm_medium,
+        $utm_campaign,
+        $utm_term,
+        $utm_content,
+    ]);
     if ($result) {
         // Send email notification
         try {

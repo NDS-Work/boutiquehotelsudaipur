@@ -5,8 +5,8 @@ requireLogin();
 $currentPage = 'visitors';
 $pageTitle   = 'Visitor Analytics';
 
-$db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
-$db->busyTimeout(5000);
+require_once __DIR__ . '/../data/db.php';
+$db = getDbConnection();
 
 $today     = date('Y-m-d');
 $yesterday = date('Y-m-d', strtotime('-1 day'));
@@ -14,84 +14,102 @@ $last7     = date('Y-m-d', strtotime('-6 days'));
 $last30    = date('Y-m-d', strtotime('-29 days'));
 
 // ── Summary stats ─────────────────────────────────────────────────────────────
-$totalToday     = (int)$db->querySingle("SELECT COUNT(*) FROM visit_sessions WHERE visit_date = '$today'");
-$newToday       = (int)$db->querySingle("SELECT COUNT(*) FROM visit_sessions WHERE visit_date = '$today' AND is_new_visitor = 1");
+$stmtToday = $db->prepare("SELECT COUNT(*) FROM visit_sessions WHERE visit_date = ?");
+$stmtToday->execute([$today]);
+$totalToday = (int)$stmtToday->fetchColumn();
+
+$stmtNewToday = $db->prepare("SELECT COUNT(*) FROM visit_sessions WHERE visit_date = ? AND is_new_visitor = 1");
+$stmtNewToday->execute([$today]);
+$newToday = (int)$stmtNewToday->fetchColumn();
+
 $returningToday = $totalToday - $newToday;
-$pagesTotal     = (int)$db->querySingle("SELECT COALESCE(SUM(page_count),0) FROM visit_sessions WHERE visit_date = '$today'");
-$avgPages       = $totalToday > 0 ? round($pagesTotal / $totalToday, 1) : 0;
-$totalYest      = (int)$db->querySingle("SELECT COUNT(*) FROM visit_sessions WHERE visit_date = '$yesterday'");
-$total7         = (int)$db->querySingle("SELECT COUNT(*) FROM visit_sessions WHERE visit_date >= '$last7'");
-$total30        = (int)$db->querySingle("SELECT COUNT(*) FROM visit_sessions WHERE visit_date >= '$last30'");
+
+$stmtPages = $db->prepare("SELECT COALESCE(SUM(page_count),0) FROM visit_sessions WHERE visit_date = ?");
+$stmtPages->execute([$today]);
+$pagesTotal = (int)$stmtPages->fetchColumn();
+$avgPages   = $totalToday > 0 ? round($pagesTotal / $totalToday, 1) : 0;
+
+$stmtYest = $db->prepare("SELECT COUNT(*) FROM visit_sessions WHERE visit_date = ?");
+$stmtYest->execute([$yesterday]);
+$totalYest = (int)$stmtYest->fetchColumn();
+
+$stmt7 = $db->prepare("SELECT COUNT(*) FROM visit_sessions WHERE visit_date >= ?");
+$stmt7->execute([$last7]);
+$total7 = (int)$stmt7->fetchColumn();
+
+$stmt30 = $db->prepare("SELECT COUNT(*) FROM visit_sessions WHERE visit_date >= ?");
+$stmt30->execute([$last30]);
+$total30 = (int)$stmt30->fetchColumn();
 
 // ── Daily chart (last 14 days) ────────────────────────────────────────────────
 $dailyDates = array(); $dailySessions = array(); $dailyNew = array();
-$daily = $db->query("
+$dailyRows = $db->query("
     SELECT visit_date, COUNT(*) as sessions,
            SUM(CASE WHEN is_new_visitor=1 THEN 1 ELSE 0 END) as new_v
     FROM visit_sessions
     WHERE visit_date >= date('now','-13 days')
     GROUP BY visit_date ORDER BY visit_date ASC
-");
-if ($daily) {
-    while ($r = $daily->fetchArray(SQLITE3_ASSOC)) {
-        $dailyDates[]    = $r['visit_date'];
-        $dailySessions[] = (int)$r['sessions'];
-        $dailyNew[]      = (int)$r['new_v'];
-    }
+")->fetchAll();
+foreach ($dailyRows as $r) {
+    $dailyDates[]    = $r['visit_date'];
+    $dailySessions[] = (int)$r['sessions'];
+    $dailyNew[]      = (int)$r['new_v'];
 }
 
 // ── Top pages (last 7 days) ───────────────────────────────────────────────────
-$topPagesData = array();
-$topPages = $db->query("
+$topPagesData = $db->query("
     SELECT page_url, COUNT(*) as views FROM visit_pageviews
     WHERE visited_at >= datetime('now','-7 days')
     GROUP BY page_url ORDER BY views DESC LIMIT 10
-");
-if ($topPages) while ($r = $topPages->fetchArray(SQLITE3_ASSOC)) $topPagesData[] = $r;
+")->fetchAll();
 
 // ── Device breakdown ──────────────────────────────────────────────────────────
 $deviceLabels = array(); $deviceCounts = array();
-$devices = $db->query("SELECT device, COUNT(*) as cnt FROM visit_sessions WHERE visit_date >= '$last7' GROUP BY device");
-if ($devices) {
-    while ($r = $devices->fetchArray(SQLITE3_ASSOC)) {
-        $deviceLabels[] = ucfirst($r['device']);
-        $deviceCounts[] = (int)$r['cnt'];
-    }
+$deviceStmt = $db->prepare("SELECT device, COUNT(*) as cnt FROM visit_sessions WHERE visit_date >= ? GROUP BY device");
+$deviceStmt->execute([$last7]);
+$devices = $deviceStmt->fetchAll();
+foreach ($devices as $r) {
+    $deviceLabels[] = ucfirst($r['device']);
+    $deviceCounts[] = (int)$r['cnt'];
 }
 
 // ── Browser breakdown ─────────────────────────────────────────────────────────
 $browserLabels = array(); $browserCounts = array();
-$browsers = $db->query("SELECT browser, COUNT(*) as cnt FROM visit_sessions WHERE visit_date >= '$last7' AND browser != '' GROUP BY browser ORDER BY cnt DESC");
-if ($browsers) {
-    while ($r = $browsers->fetchArray(SQLITE3_ASSOC)) {
-        $browserLabels[] = $r['browser'];
-        $browserCounts[] = (int)$r['cnt'];
-    }
+$browserStmt = $db->prepare("SELECT browser, COUNT(*) as cnt FROM visit_sessions WHERE visit_date >= ? AND browser != '' GROUP BY browser ORDER BY cnt DESC");
+$browserStmt->execute([$last7]);
+$browsers = $browserStmt->fetchAll();
+foreach ($browsers as $r) {
+    $browserLabels[] = $r['browser'];
+    $browserCounts[] = (int)$r['cnt'];
 }
 
 // ── Session list (today, latest 20) ──────────────────────────────────────────
-$sessionRows = array();
-$sessions = $db->query("
+$sessionStmt = $db->prepare("
     SELECT session_key, ip_address, device, browser, os, user_agent,
            first_seen, last_seen, page_count, is_new_visitor,
            (strftime('%s', last_seen) - strftime('%s', first_seen)) as duration_sec
     FROM visit_sessions
-    WHERE visit_date = '$today'
+    WHERE visit_date = ?
     ORDER BY last_seen DESC LIMIT 20
 ");
-if ($sessions) while ($r = $sessions->fetchArray(SQLITE3_ASSOC)) $sessionRows[] = $r;
+$sessionStmt->execute([$today]);
+$sessionRows = $sessionStmt->fetchAll();
 
 // ── Pageviews per session ─────────────────────────────────────────────────────
 $pvsMap = array();
 if (!empty($sessionRows)) {
-    $keys = array();
-    foreach ($sessionRows as $s) $keys[] = "'" . SQLite3::escapeString($s['session_key']) . "'";
-    $pvs = $db->query("
+    $keys = array_column($sessionRows, 'session_key');
+    $placeholders = implode(',', array_fill(0, count($keys), '?'));
+    $pvsStmt = $db->prepare("
         SELECT session_key, page_url, page_title, referrer, visited_at
-        FROM visit_pageviews WHERE session_key IN (" . implode(',', $keys) . ")
+        FROM visit_pageviews WHERE session_key IN ($placeholders)
         ORDER BY visited_at ASC
     ");
-    if ($pvs) while ($r = $pvs->fetchArray(SQLITE3_ASSOC)) $pvsMap[$r['session_key']][] = $r;
+    $pvsStmt->execute($keys);
+    $pvs = $pvsStmt->fetchAll();
+    foreach ($pvs as $r) {
+        $pvsMap[$r['session_key']][] = $r;
+    }
 }
 
 function deviceIcon($d) {

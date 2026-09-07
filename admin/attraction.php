@@ -6,7 +6,8 @@ requireLogin();
 $currentPage = 'attraction';
 $pageTitle = 'Attraction';
 
-$db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
+require_once __DIR__ . '/../data/db.php';
+$db = getDbConnection();
 
 // Handle POST actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,24 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = trim($_POST['attraction_name'] ?? '');
         if ($name !== '') {
             $stmt = $db->prepare('INSERT INTO link_attraction (attraction_name) VALUES (:name)');
-            $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-            $stmt->execute();
+            $stmt->execute([':name' => $name]);
         }
     } elseif ($action === 'edit') {
         $id   = (int)($_POST['id'] ?? 0);
         $name = trim($_POST['new_attraction_name'] ?? '');
         if ($id > 0 && $name !== '') {
             $stmt = $db->prepare('UPDATE link_attraction SET attraction_name = :name WHERE id = :id');
-            $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-            $stmt->bindValue(':id',   $id,   SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute([':name' => $name, ':id' => $id]);
         }
     } elseif ($action === 'delete') {
         $id = (int)($_POST['id'] ?? 0);
         if ($id > 0) {
             $stmt = $db->prepare('DELETE FROM link_attraction WHERE id = :id');
-            $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute([':id' => $id]);
         }
     }
 
@@ -42,11 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch all attractions
-$result     = $db->query('SELECT id, attraction_name FROM link_attraction ORDER BY id ASC');
-$attractions = [];
-while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-    $attractions[] = $row;
-}
+$attractions = $db->query('SELECT id, attraction_name FROM link_attraction ORDER BY id ASC')->fetchAll();
 
 require_once __DIR__ . '/layout-header.php';
 ?>

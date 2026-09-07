@@ -12,6 +12,7 @@ if (preg_match('#^/hotels/([^/]+)/?$#', $_uri, $_m)) {
 $pageTitle = "Home";
 $canonicalUrl = "https://boutiquehotelsudaipur.com/";
 require_once 'data/venues.php';
+require_once 'data/blogs.php';
 
 $schemaJson = json_encode([
     '@context' => 'https://schema.org',
@@ -46,6 +47,7 @@ $schemaJson = json_encode([
 require_once 'includes/header.php';
 // Get featured venues (highlighted by admin, fallback to top-rated)
 $featuredVenues = getFeaturedVenues(4);
+$latestBlogs = getAllBlogs(3, 0, true);
 ?>
 
 <!-- Hero Section -->
@@ -206,6 +208,77 @@ $featuredVenues = getFeaturedVenues(4);
         <div class="text-center mt-5">
             <a href="/hotels" class="btn btn-primary-custom">View All Boutique Hotels</a>
         </div>
+    </div>
+</section>
+
+<!-- Latest From Our Blog Section -->
+<section class="py-5" style="background-color: #ffffff; border-top: 1px solid rgba(166,124,82,0.15); border-bottom: 1px solid rgba(166,124,82,0.15);">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+            <div>
+                <span class="text-uppercase fw-semibold small" style="color: var(--brand-primary); letter-spacing: 2px;">Stories & Experiences</span>
+                <h2 class="heading-4 mt-1 mb-0">Latest From Our Blog</h2>
+            </div>
+            <div class="mt-3 mt-md-0">
+                <a href="/blogs" class="text-decoration-none fw-semibold" style="color: #4b1111; font-size: 0.95rem;">
+                    Explore All Blogs <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+
+        <?php if (!empty($latestBlogs)): ?>
+        <div class="row g-4">
+            <?php foreach ($latestBlogs as $blog): ?>
+            <div class="col-lg-4 col-md-6">
+                <article class="h-100 d-flex flex-column" style="background: #fbf9f6; border: 1px solid #eee5db; border-radius: 6px; overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                    <a href="/blog/<?php echo urlencode($blog['slug']); ?>" style="display: block; overflow: hidden;">
+                        <?php if (!empty($blog['featured_image'])): ?>
+                        <img src="<?php echo htmlspecialchars($blog['featured_image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>" style="width: 100%; height: 210px; object-fit: cover; transition: transform 0.3s ease;">
+                        <?php else: ?>
+                        <div style="width: 100%; height: 210px; background: #221414; display: flex; align-items: center; justify-content: center; color: #785a5a;">
+                            <i class="bi bi-image" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <?php endif; ?>
+                    </a>
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <?php if (!empty($blog['category_name'])): ?>
+                        <span class="badge align-self-start mb-2" style="background: #4b1111; color: #f7e6c4; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5px; padding: 5px 10px;">
+                            <?php echo htmlspecialchars($blog['category_name']); ?>
+                        </span>
+                        <?php endif; ?>
+                        <h3 style="font-size: 1.18rem; line-height: 1.4; margin-bottom: 10px; font-weight: 600;">
+                            <a href="/blog/<?php echo urlencode($blog['slug']); ?>" style="color: #2b2927; text-decoration: none;">
+                                <?php echo htmlspecialchars($blog['title']); ?>
+                            </a>
+                        </h3>
+                        <p style="color: #63615b; font-size: 0.9rem; line-height: 1.6; margin-bottom: 18px; flex-grow: 1;">
+                            <?php echo htmlspecialchars(mb_strimwidth(strip_tags($blog['excerpt'] ?: $blog['content']), 0, 115, '...')); ?>
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center pt-2 border-top" style="border-color: #eee5db !important; font-size: 0.8rem; color: #8c7d72;">
+                            <span><?php echo !empty($blog['published_at']) ? date('M j, Y', strtotime($blog['published_at'])) : date('M j, Y'); ?></span>
+                            <a href="/blog/<?php echo urlencode($blog['slug']); ?>" style="color: #c9913d; text-decoration: none; font-weight: 600;">
+                                Read More →
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/blogs" class="btn btn-primary-custom">View All Blogs</a>
+        </div>
+        <?php else: ?>
+        <div class="p-5 text-center" style="background: #fbf9f6; border: 1px dashed #e1d8cc; border-radius: 6px;">
+            <i class="bi bi-journal-richtext" style="font-size: 2.4rem; color: #4b1111;"></i>
+            <h4 class="mt-2" style="color: #4b1111; font-family: 'Cinzel', serif; font-size: 1.25rem;">New Stories Coming Soon</h4>
+            <p class="text-secondary small mb-3" style="max-width: 480px; margin: 0 auto;">
+                We are curating insider stories, heritage hotel guides, and lakeview reviews.
+            </p>
+            <a href="/blogs" class="btn btn-primary-custom">Visit Blogs</a>
+        </div>
+        <?php endif; ?>
     </div>
 </section>
 

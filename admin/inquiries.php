@@ -5,11 +5,12 @@ requireLogin();
 $currentPage = 'inquiries';
 $pageTitle = 'Inquiries';
 
-$db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
+require_once __DIR__ . '/../data/db.php';
+$db = getDbConnection();
 
-function deleteInquiry($db, $id) {
-    $id = (int)$id;
-    $db->exec("DELETE FROM link_inqueries WHERE id = $id");
+function deleteInquiry(PDO $db, $id) {
+    $stmt = $db->prepare("DELETE FROM link_inqueries WHERE id = ?");
+    $stmt->execute([(int)$id]);
 }
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
@@ -19,9 +20,11 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 }
 
 $today = date('Y-m-d');
-$countToday = $db->querySingle("SELECT COUNT(*) FROM link_inqueries WHERE DATE(created_at) = '$today'");
+$stmtToday = $db->prepare("SELECT COUNT(*) FROM link_inqueries WHERE DATE(created_at) = ?");
+$stmtToday->execute([$today]);
+$countToday = (int)$stmtToday->fetchColumn();
 
-$results = $db->query("SELECT * FROM link_inqueries ORDER BY created_at DESC");
+$results = $db->query("SELECT * FROM link_inqueries ORDER BY created_at DESC")->fetchAll();
 
 // Fetch venue inquiry counts for bar chart (most first, exclude 0)
 $venueRows = $db->query("
@@ -30,10 +33,10 @@ $venueRows = $db->query("
     WHERE venue_name IS NOT NULL AND TRIM(venue_name) != ''
     GROUP BY venue_name
     ORDER BY cnt DESC
-");
+")->fetchAll();
 $venueLabels = [];
 $venueCounts = [];
-while ($row = $venueRows->fetchArray(SQLITE3_ASSOC)) {
+foreach ($venueRows as $row) {
     if ($row['cnt'] > 0) {
         $venueLabels[] = $row['venue_name'];
         $venueCounts[] = (int)$row['cnt'];
@@ -174,7 +177,7 @@ require_once __DIR__ . '/layout-header.php';
                     </tr>
                 </thead>
                 <tbody>
-                <?php while ($row = $results->fetchArray(SQLITE3_ASSOC)): ?>
+                <?php foreach ($results as $row): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['name']); ?></td>
                         <td><?php echo htmlspecialchars($row['email']); ?></td>
@@ -201,7 +204,7 @@ require_once __DIR__ . '/layout-header.php';
                             </button>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

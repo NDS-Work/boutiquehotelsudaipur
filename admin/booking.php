@@ -6,14 +6,16 @@ $currentPage = 'booking';
 $pageTitle = 'Bookings';
 
 
-$db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
+require_once __DIR__ . '/../data/db.php';
+$db = getDbConnection();
 
 // Fetch all statuses for select box
 $statusOptions = [];
 $statusDefaultId = 1;
-$statusRes = $db->query('SELECT * FROM link_status ORDER BY sort_order ASC');
-while ($row = $statusRes->fetchArray(SQLITE3_ASSOC)) {
-    $statusOptions[] = $row;
+try {
+    $statusOptions = $db->query('SELECT * FROM link_status ORDER BY sort_order ASC')->fetchAll();
+} catch (Throwable $e) {
+    $statusOptions = [];
 }
 if (count($statusOptions)) {
     // Default is the one with lowest sort_order
@@ -21,9 +23,9 @@ if (count($statusOptions)) {
 }
 
 // Function to delete a booking by ID
-function deleteBooking($db, $id) {
-    $id = (int)$id;
-    $db->exec("DELETE FROM link_book WHERE id = $id");
+function deleteBooking(PDO $db, $id) {
+    $stmt = $db->prepare("DELETE FROM link_book WHERE id = ?");
+    $stmt->execute([(int)$id]);
 }
 
 // Handle delete action BEFORE any output
@@ -36,20 +38,25 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 // Count today's bookings
 $today = date('Y-m-d');
 
-$tableExists = $db->querySingle("SELECT name FROM sqlite_master WHERE type='table' AND name='link_book'");
+$tableCheckStmt = $db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='link_book'");
+$tableExists = (bool)$tableCheckStmt->fetchColumn();
 $hotelSearch = isset($_GET['hotel_search']) ? trim($_GET['hotel_search']) : '';
+$results = [];
 if ($tableExists) {
-    $countToday = $db->querySingle("SELECT COUNT(*) FROM link_book WHERE DATE(created_at) = '$today'");
+    $stmtToday = $db->prepare("SELECT COUNT(*) FROM link_book WHERE DATE(created_at) = ?");
+    $stmtToday->execute([$today]);
+    $countToday = (int)$stmtToday->fetchColumn();
+
     if ($hotelSearch !== '') {
         $stmt = $db->prepare("SELECT * FROM link_book WHERE hotel_name LIKE ? ORDER BY created_at DESC");
-        $stmt->bindValue(1, '%' . $hotelSearch . '%', SQLITE3_TEXT);
-        $results = $stmt->execute();
+        $stmt->execute(['%' . $hotelSearch . '%']);
+        $results = $stmt->fetchAll();
     } else {
-        $results = $db->query("SELECT * FROM link_book ORDER BY created_at DESC");
+        $results = $db->query("SELECT * FROM link_book ORDER BY created_at DESC")->fetchAll();
     }
 } else {
     $countToday = 0;
-    $results = false;
+    $results = [];
 }
 
 require_once __DIR__ . '/layout-header.php';
@@ -95,7 +102,7 @@ require_once __DIR__ . '/layout-header.php';
                     </tr>
                 </thead>
                 <tbody>
-                <?php while ($row = $results->fetchArray(SQLITE3_ASSOC)): ?>
+                <?php foreach ($results as $row): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($row['guest_name']); ?></td>
                         <td><?php echo htmlspecialchars($row['guest_count']); ?></td>
@@ -151,7 +158,7 @@ require_once __DIR__ . '/layout-header.php';
                             </button>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
                 </tbody>
             </table>
             <?php else: ?>

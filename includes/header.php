@@ -110,9 +110,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         strpos($currentRequestPath, '/hotels/collection/luxury-boutique-hotels/') === 0 ||
         (basename($_SERVER['PHP_SELF']) === 'hotels.php' && isset($_GET['collection']) && $_GET['collection'] === 'luxury-heritage-hotel')
     );
+
+    $isBlogsPage = strpos($currentRequestPath, '/blog') === 0;
     ?>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #4b1111; border-bottom: 1px solid #3f4816;">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #4b1111; border-bottom: 1px solid #c9913d;">
         <div class="container-fluid px-4">
             <a class="navbar-brand fw-black text-uppercase" href="/" style="color: #fff; font-size: 1.25rem; letter-spacing: -0.5px; font-family: 'Cinzel', serif">
                 Boutique Hotels In Udaipur
@@ -140,6 +142,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $isLuxuryPage ? 'active' : ''; ?>"
        href="/hotels/collection/luxury-boutique-hotels">Luxury Heritage Hotel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $isBlogsPage ? 'active' : ''; ?>" href="/blogs">Blogs</a>
                     </li>
                 </ul>
             </div>

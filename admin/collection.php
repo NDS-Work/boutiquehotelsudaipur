@@ -5,7 +5,8 @@ requireLogin();
 $currentPage = 'collection';
 $pageTitle = 'Collection';
 
-$db = new SQLite3(__DIR__ . '/../data/new.sqlite.db');
+require_once __DIR__ . '/../data/db.php';
+$db = getDbConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verifyCsrf();
@@ -15,24 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = trim($_POST['collection_name'] ?? '');
         if ($name !== '') {
             $stmt = $db->prepare('INSERT INTO link_collection (collection_name) VALUES (:name)');
-            $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-            $stmt->execute();
+            $stmt->execute([':name' => $name]);
         }
     } elseif ($action === 'edit') {
         $id   = (int)($_POST['id'] ?? 0);
         $name = trim($_POST['new_collection_name'] ?? '');
         if ($id > 0 && $name !== '') {
             $stmt = $db->prepare('UPDATE link_collection SET collection_name = :name WHERE id = :id');
-            $stmt->bindValue(':name', $name, SQLITE3_TEXT);
-            $stmt->bindValue(':id',   $id,   SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute([':name' => $name, ':id' => $id]);
         }
     } elseif ($action === 'delete') {
         $id = (int)($_POST['id'] ?? 0);
         if ($id > 0) {
             $stmt = $db->prepare('DELETE FROM link_collection WHERE id = :id');
-            $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
-            $stmt->execute();
+            $stmt->execute([':id' => $id]);
         }
     }
 
@@ -40,11 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-$collections = [];
-$result = $db->query('SELECT id, collection_name FROM link_collection ORDER BY id ASC');
-while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-    $collections[] = $row;
-}
+$collections = $db->query('SELECT id, collection_name FROM link_collection ORDER BY id ASC')->fetchAll();
 
 require_once __DIR__ . '/layout-header.php';
 ?>

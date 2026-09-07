@@ -278,6 +278,22 @@ input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); }
                 <span class="icon">+</span> Add Venue
             </a>
         </div>
+        <div class="nav-label">Blogs & Guides</div>
+        <div class="nav-item">
+            <a href="/admin/blogs.php" class="<?php echo ($currentPage ?? '') === 'blogs' ? 'active' : ''; ?>">
+                <span class="icon">✎</span> All Blogs
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="/admin/blog-add.php" class="<?php echo ($currentPage ?? '') === 'blog-add' ? 'active' : ''; ?>">
+                <span class="icon">+</span> Add Blog
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="/admin/blog-categories.php" class="<?php echo ($currentPage ?? '') === 'blog-categories' ? 'active' : ''; ?>">
+                <span class="icon">🏷</span> Blog Categories
+            </a>
+        </div>
         <div class="nav-label">Inquiries</div>
         <div class="nav-item">
             <a href="/admin/inquiries.php" class="<?php echo ($currentPage ?? '') === 'inquiries' ? 'active' : ''; ?>">
