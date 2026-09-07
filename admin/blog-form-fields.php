@@ -78,14 +78,21 @@ $categories = getAllBlogCategories(false);
             </div>
 
             <div class="form-group">
-                <label>Body Content (Rich Text Editor) *</label>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label style="margin: 0;">Body Content (Rich Text &amp; HTML) *</label>
+                    <button type="button" id="toggle-source-btn" class="btn btn-secondary" style="padding: 4px 10px; font-size: 12px; display: inline-flex; align-items: center; gap: 5px;">
+                        <span>&lt;/&gt;</span> <span id="source-btn-text">HTML Source Code</span>
+                    </button>
+                </div>
                 <!-- Quill Container -->
                 <div id="quill-editor">
                     <?php echo $formData['content'] ?? ''; ?>
                 </div>
+                <!-- Raw HTML Source Textarea (Hidden by default) -->
+                <textarea id="raw-html-editor" rows="22" style="display: none; width: 100%; font-family: monospace; font-size: 13px; line-height: 1.5; background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 12px;" placeholder="Paste raw HTML here..."><?php echo htmlspecialchars($formData['content'] ?? ''); ?></textarea>
                 <!-- Hidden input that gets populated on form submit -->
                 <input type="hidden" name="content" id="hidden_content">
-                <div class="form-hint">Use toolbar for headings (H2, H3), blockquotes, lists, images, and links.</div>
+                <div class="form-hint" id="editor-hint">Tip: Click <strong>&lt;/&gt; HTML Source Code</strong> above to paste tables, custom HTML cards, or embed codes directly.</div>
             </div>
         </div>
 
@@ -191,6 +198,9 @@ $categories = getAllBlogCategories(false);
                 <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-weight: bold;">
                     <?php echo isset($isEdit) && $isEdit ? 'Update Article' : 'Save & Publish'; ?>
                 </button>
+                <a href="/admin/download-content-guide.php" class="btn btn-secondary" style="text-align: center; font-size: 12px;" title="Download Markdown template & content guide for writers">
+                    📥 Download Content Skill (.md)
+                </a>
                 <a href="/admin/blogs.php" class="btn btn-secondary" style="text-align: center;">Cancel</a>
             </div>
         </div>
@@ -335,10 +345,49 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Sync Quill HTML before submit
+    // Toggle between Visual Rich Text and Raw HTML Source
+    var isHtmlMode = false;
+    var toggleBtn = document.getElementById('toggle-source-btn');
+    var btnText = document.getElementById('source-btn-text');
+    var quillContainer = document.getElementById('quill-editor');
+    var rawTextarea = document.getElementById('raw-html-editor');
+    var quillToolbar = document.querySelector('.ql-toolbar');
+    var editorHint = document.getElementById('editor-hint');
+
+    toggleBtn.addEventListener('click', function() {
+        if (!isHtmlMode) {
+            // Switch to HTML Source Mode
+            rawTextarea.value = quill.root.innerHTML;
+            quillContainer.style.display = 'none';
+            if (quillToolbar) quillToolbar.style.display = 'none';
+            rawTextarea.style.display = 'block';
+            btnText.textContent = 'Visual Rich Editor';
+            toggleBtn.classList.remove('btn-secondary');
+            toggleBtn.classList.add('btn-primary');
+            editorHint.innerHTML = '<span style="color:var(--accent);">Source Code Mode active.</span> Paste your HTML markup freely here.';
+            isHtmlMode = true;
+        } else {
+            // Switch back to Visual Editor
+            quill.root.innerHTML = rawTextarea.value;
+            rawTextarea.style.display = 'none';
+            quillContainer.style.display = 'block';
+            if (quillToolbar) quillToolbar.style.display = 'block';
+            btnText.textContent = 'HTML Source Code';
+            toggleBtn.classList.remove('btn-primary');
+            toggleBtn.classList.add('btn-secondary');
+            editorHint.innerHTML = 'Tip: Click <strong>&lt;/&gt; HTML Source Code</strong> above to paste tables, custom HTML cards, or embed codes directly.';
+            isHtmlMode = false;
+        }
+    });
+
+    // Sync HTML before submit
     var form = document.querySelector('form');
     form.addEventListener('submit', function() {
-        document.getElementById('hidden_content').value = quill.root.innerHTML;
+        if (isHtmlMode) {
+            document.getElementById('hidden_content').value = rawTextarea.value;
+        } else {
+            document.getElementById('hidden_content').value = quill.root.innerHTML;
+        }
     });
 });
 </script>

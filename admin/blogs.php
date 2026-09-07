@@ -44,6 +44,7 @@ require_once __DIR__ . '/layout-header.php';
 <div class="topbar">
     <h1>Blog Posts</h1>
     <div class="topbar-actions">
+        <a href="/admin/download-content-guide.php" class="btn btn-secondary" title="Download Markdown template & content guide to share with writers">📥 Download Content Skill (.md)</a>
         <a href="/admin/blog-categories.php" class="btn btn-secondary">Manage Categories</a>
         <a href="/admin/blog-add.php" class="btn btn-primary">+ Add New Blog</a>
     </div>
