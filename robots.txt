@@ -1,17 +1,21 @@
 User-agent: *
+
 # Allow main site
 Allow: /
 
-# Block admin & backend endpoints (prevents crawl waste & unindexed discovery)
+# Block admin & backend endpoints
 Disallow: /admin/
 Disallow: /track.php
 Disallow: /process_contact.php
 Disallow: /process_booking.php
 Disallow: /blogs/wp-admin/
 Disallow: /blogs/wp-includes/
+Disallow:/page=
+
+# Block pagination URLs
+Disallow: /*?*page=
 
 # Block crawl waste URLs
-Disallow: /*?*
 Disallow: /search
 Disallow: /tag/
 Disallow: /author/
@@ -24,23 +28,25 @@ Sitemap: https://boutiquehotelsudaipur.com/sitemap.xml
 
 
 #################################
-# 🤖 AI Crawlers (LLM Friendly)
+# AI Crawlers
 #################################
 
-# Allow AI search bots
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /*?*page=
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /*?*page=
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /*?*page=
 
-# Allow Google AI (Gemini visibility)
 User-agent: Google-Extended
 Allow: /
+Disallow: /*?*page=
 
-# (Optional) Allow training bot for broader AI visibility
 User-agent: GPTBot
 Allow: /
+Disallow: /*?*page=
